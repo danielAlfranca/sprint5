@@ -18,21 +18,21 @@ export class WeatherAdmin extends APIAdmin{ // CLASE PARA EJERCICIO 4
         }]
     }
 
-    public async query():Promise<any>{
+    public async query():Promise<any>{ // espera a autorizacion para utilizar navigator.geolocation y hace la query
 
        await this.configWeatherURL();
  
        return super.query();       
     }
 
-    public getWeatherIcon(obj){
+    public getWeatherIcon(obj){ // formatea url para icono del tiempo
 
         const icon:string = obj.weather[0].icon
 
         return "http://openweathermap.org/img/w/" + icon + ".png"
     }
 
-    private async configWeatherURL(){
+    private async configWeatherURL(){ // formatea url para peticion de la api
 
         const  config = this.getConfig(), 
                coords =  await this.getLocalCoordinates();
@@ -40,7 +40,7 @@ export class WeatherAdmin extends APIAdmin{ // CLASE PARA EJERCICIO 4
         config.url += `?lat=${coords.latitude}&lon=${coords.longitude}&exclude=minutely,hourly,daily,alerts&units=metric&appid=${config.key}`;
     }
 
-    private getLocalCoordinates():Promise<any>{
+    private getLocalCoordinates():Promise<any>{ // extrae coordenadas de localizacion del navegador si se puede
 
         const   newYorkCoords = { 
             

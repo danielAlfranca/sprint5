@@ -4,7 +4,7 @@ import { WeatherAdmin } from "./weatherAdmin";
 import { Joke, WeatherResponse } from "../interfaces";
 
 
-export default class JokeApp{
+export default class JokeApp{ // CLASE PRINCIPAL QUE GESTIONA LA APP
 
     private jokes:Joke[] = [];
 
@@ -21,9 +21,9 @@ export default class JokeApp{
 
     constructor(typeOfJokes:string){
 
-        if(typeOfJokes=='bromas variadas') this.jokesApi = new JokesAdmin();
+        if(typeOfJokes=='bromas variadas') this.jokesApi = new JokesAdmin(); // ejercicio 5
 
-        else if(typeOfJokes=="dad's jokes") this.jokesApi = new DadJokesAdmin();
+        else if(typeOfJokes=="dad's jokes") this.jokesApi = new DadJokesAdmin(); // ejercicio 1
 
         this.weatherApi = new WeatherAdmin();
 
@@ -31,7 +31,7 @@ export default class JokeApp{
 
     }
 
-    public getJoke(){
+    public getJoke(){ // HACE LA SOLICITUD CON LA API DE BROMAS Y AÑADE Y MUESTRA EL RESULTADO 
 
         if (!this.prevHasScore() && this.jokes.length) {
 
@@ -49,12 +49,12 @@ export default class JokeApp{
         }).catch(e=>this.manageError('joke'))
     }
 
-    private addJoke(joke:Joke){
+    private addJoke(joke:Joke){ // AÑADE EN LISTA DE BROMAS
 
         this.jokes.push(joke);
     }
 
-    private showJoke(joke:Joke) {
+    private showJoke(joke:Joke) { // PINTA EL HTML DE LA BROMA OBTENIDA DE LA API
 
         const clone = document.querySelector('template').content.cloneNode(true) as HTMLElement;
 
@@ -69,14 +69,14 @@ export default class JokeApp{
         this.changeBackground();
     }
 
-    private removeIconsListeners() {
+    private removeIconsListeners() { // REMUEVE EVENT LISTENERS DE LOS EMOJIS ANTES DE DESTRUIRLOS
 
         const icons = this.containerJokes.querySelectorAll('i');
 
         Object.keys(icons || {}).forEach(keys => icons[keys].removeEventListener('click', this.vote))
     }
 
-    private vote(value) {
+    private vote(value) { // AÑADE VOTO A ULTIMA BROMA
 
         [...this.jokes].pop().score = value;
 
@@ -84,7 +84,7 @@ export default class JokeApp{
     }
 
 
-    private paintSelection() {
+    private paintSelection() { // PINTA EMOJI SELECCIONADO Y LOS NO SELECCIONADOS
 
         const icons = this.containerJokes.querySelectorAll('i'),
             target = event.target,
@@ -102,7 +102,7 @@ export default class JokeApp{
         });
     }
 
-    private changeBackground(){
+    private changeBackground(){ // CAMBIA EL SVG DEL BACKGROUND
 
         const container = document.querySelector('.bkg') as HTMLElement;
 
@@ -115,14 +115,14 @@ export default class JokeApp{
         ;        
     }
 
-    private prevHasScore() {
+    private prevHasScore() { //  CHECKEA SI ULTIMA BROMA HA SIDO PUNTUADA
 
        return (([...this.jokes].pop()) || {
             score: null
         }).score !== null
     }
 
-    protected manageError(type:string){
+    protected manageError(type:string){ // MENSAJE SI HAY ERROR EN SERVIDOR
 
         const item = type == 'joke' ? 'la broma':'el temps';
 
@@ -131,7 +131,7 @@ export default class JokeApp{
     }
 
 
-    private paintWeather(weatherApi:WeatherAdmin){
+    private paintWeather(weatherApi:WeatherAdmin){ // PINTA EL HTML DEL LA API DEL TIEMPO
 
         weatherApi.query().then((response)=>{
 
@@ -145,10 +145,11 @@ export default class JokeApp{
             temp.innerHTML = response.main.temp + 'º';
 
             container.classList.remove('d-none');
-        });        
+
+        }).catch(error=>this.manageError('temps'));        
     }
 
-    private getWeatherIcon(obj){
+    private getWeatherIcon(obj){ // OBTIENE ICON SEGUN EL TIEMPO QUE HAGA
       
         return this.weatherApi.getWeatherIcon(obj)
     }

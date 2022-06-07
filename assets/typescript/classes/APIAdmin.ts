@@ -6,7 +6,7 @@ export abstract class APIAdmin{ // clase general para la gestion de las apis
 
     constructor(){};
 
-    public query():Promise<any>{
+    public query():Promise<any>{ // solicita datos a la api
 
         const config = this.getConfig();
 
@@ -18,8 +18,7 @@ export abstract class APIAdmin{ // clase general para la gestion de las apis
         .then(response=>this.manageResponse(response))        
     }
 
-    protected getConfig(){
-
+    protected getConfig(){ 
         return [...this.APIConfigs].pop();
     }
 
