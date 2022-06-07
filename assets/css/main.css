@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap');
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.containerJokes {
+    margin: 5%;
+    width: 90%;
+    height: 90%;
+    max-width: 800px;
+    padding: 20px 50px;
+    box-sizing: border-box;
+}
+
+#acuditsContainer {
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.btn {
+    border-radius: 3rem;
+}
+
+.bkg {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+    height: 100%;
+}
+
+.bkg1 {
+    background-image: url('../images/bkg1.svg');
+}
+
+.bkg2 {
+    background-image: url('../images/bkg2.svg');
+}
+
+.bkg3 {
+    background-image: url('../images/bkg3.svg');
+}
+
+.bkg1,
+.bkg2,
+.bkg3 {
+    animation: resize 1s;
+}
+
+@keyframes resize {
+    0% {
+        scale: 0 1
+    }
+    100% {
+        scale: 1 1
+    }
+}
